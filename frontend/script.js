@@ -10,7 +10,7 @@ let nextChatId = 1;
 const MAX_CHATS = 3;
 
 // DOM elements
-let chatMessages, chatInput, sendButton, totalCourses, courseTitles, newChatButton, chatHistoryContainer;
+let chatMessages, chatInput, sendButton, totalCourses, courseTitles, newChatButton, chatHistoryContainer, themeToggle;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,8 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
     courseTitles = document.getElementById('courseTitles');
     newChatButton = document.getElementById('newChatButton');
     chatHistoryContainer = document.getElementById('chatHistory');
+    themeToggle = document.getElementById('themeToggle');
     
     setupEventListeners();
+    loadTheme();
     loadChatHistory();
     createNewSession();
     loadCourseStats();
@@ -39,6 +41,15 @@ function setupEventListeners() {
     
     // New chat button
     newChatButton.addEventListener('click', startNewChat);
+    
+    // Theme toggle button
+    themeToggle.addEventListener('click', toggleTheme);
+    themeToggle.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleTheme();
+        }
+    });
     
     // Suggested questions
     document.querySelectorAll('.suggested-item').forEach(button => {
@@ -358,5 +369,27 @@ async function loadCourseStats() {
         if (courseTitles) {
             courseTitles.innerHTML = '<span class="error">Failed to load courses</span>';
         }
+    }
+}
+
+// Theme Functions
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') {
+        document.documentElement.classList.add('light-theme');
+    } else {
+        document.documentElement.classList.remove('light-theme');
+    }
+}
+
+function toggleTheme() {
+    const isLightTheme = document.documentElement.classList.contains('light-theme');
+    
+    if (isLightTheme) {
+        document.documentElement.classList.remove('light-theme');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.classList.add('light-theme');
+        localStorage.setItem('theme', 'light');
     }
 }
