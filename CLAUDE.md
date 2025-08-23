@@ -21,6 +21,43 @@ uv sync
 **Environment setup:**
 Copy `.env.example` to `.env` and add your `ANTHROPIC_API_KEY`.
 
+## Code Quality Commands
+
+**Format code (Linux/Mac):**
+```bash
+./scripts/format.sh
+```
+
+**Format code (Windows):**
+```batch
+format.bat
+```
+
+**Run linting (Linux/Mac):**
+```bash
+./scripts/lint.sh
+```
+
+**Run linting (Windows):**
+```batch
+lint.bat
+```
+
+**Run all quality checks (Linux/Mac):**
+```bash
+./scripts/quality.sh
+```
+
+**Manual commands:**
+```bash
+# Format imports and code
+python -m isort .
+python -m black .
+
+# Run linting
+python -m flake8 .
+```
+
 ## Architecture Overview
 
 This is a RAG (Retrieval-Augmented Generation) chatbot system with a clear separation between frontend and backend:
